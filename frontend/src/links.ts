@@ -29,4 +29,4 @@ export const DEMO_DATASETS_URL =
  * `legal.ts`가 아니라 여기인 이유가 이 파일 머리말 그대로다 — 저장소는 어디서 띄우든
  * **한 곳**이라, 학교가 직접 띄운 앱에서도 같은 주소를 가리켜야 맞다.
  */
-export const REPOSITORY_URL = 'https://github.com/itmir913/ml-playgrounds'
+export const REPOSITORY_URL = 'https://github.com/psj-info/ml-playgrounds'
