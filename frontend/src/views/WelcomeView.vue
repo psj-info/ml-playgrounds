@@ -25,9 +25,6 @@ import ProjectPicker from '@/components/ProjectPicker.vue'
 import { DATA_KINDS, DEFAULT_DATA_TYPE } from '@/data/kinds'
 import { ROUTE_PROJECT_HOME } from '@/router/names'
 import { ACTION_ICONS } from '@/icons'
-import { FALLBACK_LOCALE, isSupportedLocale } from '@/i18n'
-import { NOTICES_PATH, privacyPath } from '@/legal'
-import { REPOSITORY_URL } from '@/links'
 import { DEMO_DATASETS_URL } from '@/links'
 import { MAX_FILE_NAME_LENGTH } from '@/limits'
 import { newProjectDocument, newProjectSeed } from '@/project/create'
@@ -53,14 +50,6 @@ const { t, locale } = useI18n()
 const router = useRouter()
 const toasts = useToastStore()
 const format = useFormat()
-
-/**
- * 지금 언어의 개인정보 처리방침. **vue-i18n의 `locale`은 문자열이라 한 번 좁힌다** -
- * 없는 언어의 주소를 만들면 학생이 404를 보고, 그것은 링크가 없는 것보다 나쁘다.
- */
-const privacyHref = computed(() =>
-  privacyPath(isSupportedLocale(locale.value) ? locale.value : FALLBACK_LOCALE),
-)
 
 const summaries = ref<ProjectSummary[]>([])
 
@@ -592,40 +581,5 @@ onMounted(refresh)
       **접히게 둔다. 쌓지 않는다.** 375px에서 둘이 한 줄에 서고 `GitHub`만 내려간다.
       세로로 셋을 쌓으면 목록처럼 보이고, 푸터가 차지할 높이가 아니다.
     -->
-    <footer
-      v-if="ready"
-      class="mt-8 flex flex-wrap items-center justify-center gap-x-1 border-t border-line pt-3"
-    >
-      <a
-        :href="privacyHref"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="rounded-control px-3 py-1.5 text-brand transition-colors hover:bg-surface-sunken hover:text-brand-strong"
-        >{{ t('legal.privacy') }}</a
-      >
-      <a
-        :href="NOTICES_PATH"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="rounded-control px-3 py-1.5 text-brand transition-colors hover:bg-surface-sunken hover:text-brand-strong"
-        >{{ t('legal.notices') }}</a
-      >
-      <!--
-        **아이콘이 아니라 글자다.** 옆의 둘과 같은 위계라 같은 모양이어야 하고, 로고를
-        번들에 넣으면 상표와 벤더링 규약이 함께 따라온다(CLAUDE.md §4). 그리고 이 도구를
-        쓰는 사람은 중고등학생이다 — **모양만으로 말하지 않는다.**
-
-        **이름이 `소스 코드`가 아닌 이유**는 바로 옆이 `오픈소스 라이선스`라서다. 두
-        링크의 목적지가 정반대인데(남의 코드 고지 대 우리 코드) 낱말이 겹치면 같은 것으로
-        읽힌다. 그리고 밖으로 나가는 링크는 **어디로 가는지**를 말해야 한다.
-      -->
-      <a
-        :href="REPOSITORY_URL"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="rounded-control px-3 py-1.5 text-brand transition-colors hover:bg-surface-sunken hover:text-brand-strong"
-        >{{ t('legal.source') }}</a
-      >
-    </footer>
   </div>
 </template>
